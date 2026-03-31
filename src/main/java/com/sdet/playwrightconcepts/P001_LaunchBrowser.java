@@ -1,4 +1,4 @@
-package com.sdet.playwright;
+package com.sdet.playwrightconcepts;
 
 
 import com.microsoft.playwright.*;
@@ -46,7 +46,10 @@ public class P001_LaunchBrowser {
         Playwright playwright = Playwright.create();
 
         // Launch Chromium browser
-        Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setChannel("chrome"));
+        Browser browser = playwright.chromium().launch(
+                                                        new BrowserType.LaunchOptions()
+                                                        .setHeadless(false)
+                                                        .setChannel("chrome"));
 
         // Create a new browser context (fresh session)
         BrowserContext context = browser.newContext();
@@ -70,7 +73,10 @@ public class P001_LaunchBrowser {
         Playwright playwright = Playwright.create();
 
         // Launch Chromium browser
-        Browser browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(false));
+        Browser browser = playwright.firefox().launch(
+                                                        new BrowserType
+                                                        .LaunchOptions()
+                                                        .setHeadless(false));
 
         // Create a new browser context (fresh session)
         BrowserContext context = browser.newContext();

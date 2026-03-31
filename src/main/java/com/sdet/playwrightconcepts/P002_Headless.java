@@ -1,4 +1,4 @@
-package com.sdet.playwright;
+package com.sdet.playwrightconcepts;
 
 import com.microsoft.playwright.*;
 
