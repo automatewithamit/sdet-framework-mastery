@@ -1,18 +1,16 @@
 package com.sdet.tests;
 
 import com.microsoft.playwright.*;
-import com.sdet.framework.core.DriverManager;
-import com.sdet.framework.helper.PropertiesReader;
+import com.sdet.framework.core.PlaywrightManager;
 import org.testng.annotations.*;
 
-public class BaseTest {
+public abstract class BaseTest {
 
     Page page;
 
     @BeforeMethod
     public void beforeMethod(){
-        DriverManager.initializeBrowser();
-        page = DriverManager.getPage();
+
         navigateTo("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
     }
@@ -20,17 +18,21 @@ public class BaseTest {
         if (url == null || url.trim().isEmpty()) {
             throw new IllegalArgumentException("URL cannot be null or empty");
         }
-        DriverManager.getPage().navigate(url);
+        PlaywrightManager.getPage().navigate(url);
         System.out.println("Navigated to: " + url);
     }
+
     @BeforeClass
     public void beforeClass(){
         System.out.println("Executing beforeClass");
     }
+
     @BeforeSuite
     public void beforeSuite(){
         System.out.println("Executing beforeSuite");
+        PlaywrightManager.initializeBrowser();
     }
+
     @BeforeTest
     public void beforeTest(){
         System.out.println("Executing beforeTest");
@@ -41,8 +43,8 @@ public class BaseTest {
     }
     @AfterMethod
     public void afterMethod(){
-        DriverManager.closePage();
-        DriverManager.closeContext();
+        PlaywrightManager.closePage();
+        PlaywrightManager.closeContext();
     }
     @AfterClass
     public void afterClass(){
@@ -50,7 +52,8 @@ public class BaseTest {
     }
     @AfterSuite
     public void afterSuite(){
-        DriverManager.closeBrowser();
+        PlaywrightManager.closeBrowser();
+
     }
     @AfterTest
     public void afterTest(){

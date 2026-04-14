@@ -12,9 +12,8 @@ public class LoginTest extends BaseTest{
     public void validateCorrectLogin(){
         LoginPage loginPage = new LoginPage();
         loginPage.loginToApplication("Admin", "admin123");
-        assert page.url().contains("/dashboard/index");
-        //assert that user is navigated to dashboard page
 
+        assert page.url().contains("/dashboard/index");
 
     }
     @Test

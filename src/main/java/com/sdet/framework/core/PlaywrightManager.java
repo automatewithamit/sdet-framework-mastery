@@ -3,15 +3,20 @@ package com.sdet.framework.core;
 import com.microsoft.playwright.*;
 import com.sdet.framework.helper.PropertiesReader;
 
-import java.util.Locale;
-
-public class DriverManager {
+public class PlaywrightManager {
+    //SOLID Principles
+    // - Single Responsibility Principle (SRP)
+    // - This class is responsible for managing the browser lifecycle and providing access to the Page object.
+    // - Open/Closed Principle (OCP)
+    // - The class is open for extension (you can add support for new browsers) but closed for modification (you don't need to change existing code to add new functionality).
+    // - Liskov Substitution Principle (LSP)
+    // - The class can be used in place of any of its components (Browser, BrowserContext, Page) without affecting the correctness of the program.
 
     private static Playwright playwright;
     private static Browser browser;
     private static BrowserContext context;
     private static Page page;
-
+    //WebDriver driver = new ChromeDriver();
     public static void initializeBrowser() {
         String browserName = PropertiesReader.getProperty("browserName", "chromium");
 
@@ -39,15 +44,23 @@ public class DriverManager {
             System.out.println("Invalid browser name: " + browserName + ". Launching default browser (chromium)");
         }
 
-        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(null));
-        page = context.newPage();
-        System.out.println("Browser initialized: " + browserName);
+    }
+
+    public static BrowserContext getContext() {
+        if (browser == null) {
+            throw new RuntimeException("Browser not initialized. Call initializeBrowser() first.");
+        }
+        if (context == null) {
+            context = browser.newContext();
+        }
+        return context;
     }
 
     public static Page getPage() {
         if (page == null) {
             throw new RuntimeException("Browser not initialized. Call initializeBrowser() first.");
         }
+        page = context.newPage();
         return page;
     }
 
